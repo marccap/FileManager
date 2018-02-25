@@ -1,0 +1,77 @@
+<div class="container mainContainer">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-secondary" (click)="back()" [disabled]="!canGoBack()">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="up()">
+            <span class="glyphicon glyphicon-level-up"></span>
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="forward()" [disabled]="!canGoForward()">
+            <span class="glyphicon glyphicon-arrow-right"></span>
+          </button>
+        </span>
+        <input type="text" spellcheck="false" class="form-control addressBar" [(value)]="currentPath" (keydown)="addressKeyDown()">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-secondary">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+          </button>
+        </span>
+      </div>
+      <div class="listContainer">
+        <div style="text-align: center; margin-top: 1em;font-size: 1.5em;color:red" *ngIf="!loading&&currentDirectory.status=='Not Found'">
+          Not Found
+        </div>
+        <div style="text-align: center; margin-top: 1em;font-size: 1.5em;color:red" *ngIf="!loading&&currentDirectory.status=='No Access'">
+          Access Denied
+        </div>
+        <div style="text-align: center; margin-top: 1em;font-size: 1.5em;color:black" *ngIf="loading">
+          Loading
+        </div>
+        <div style="text-align: center; margin-top: 1em;font-size: 1.5em;color:gray" *ngIf="!loading&&currentDirectory.status!='No Access'&&currentDirectory.status!='Not Found'&&currentDirectory.fIs.length==0">
+          Folder is Empty
+        </div>
+        <table class="table table-hover fileList" *ngIf="!loading&&currentDirectory.status!='No Access'&&currentDirectory.status!='Not Found'&&currentDirectory.fIs.length>0">
+          <tr>
+            <th class="col colSelect">Select</th>
+            <th class="col colIcon"></th>
+            <th class="col colName">Name</th>
+            <!--<th class="typeCol">Type</th>-->
+            <th class="col colSize">Size</th>
+            <th class="col colModified">Modified</th>
+          </tr>
+          <tr *ngFor="let file of currentDirectory.fIs">
+            <td class="col colSelect">
+              <input style="padding:5px;width:16px; height:16px" type="checkbox" class="form-check-input fileSelectCheckbox">
+            </td>
+            <td class="col colIcon" (click)="openItem(file)">
+              <span class="glyphicon" [ngClass]="getIcon(file)"></span>
+            </td>
+            <td class="col colName" (click)="openItem(file)">
+              <ng-container *ngIf="file.isDirectory">
+                {{file.name}}
+              </ng-container>
+              <ng-container *ngIf="!file.isDirectory">
+                {{file.name}}
+              </ng-container>
+            </td>
+            <!-- <td class="typeCol" (click)="openItem(file)">
+              <ng-container *ngIf="!file.isDirectory">
+                {{file.name | getExtension}}
+              </ng-container>
+            </td>
+          -->
+            <td class="col colSize" (click)="openItem(file)">
+              <ng-container *ngIf="!file.isDirectory">
+                {{file.length | fuzzySize}}
+              </ng-container>
+            </td>
+            <td class="col colModified" (click)="openItem(file)">{{file.lastModified | date:"yyyy-MM-dd HH:mm"}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

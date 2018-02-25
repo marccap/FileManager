@@ -1,0 +1,33 @@
+.titleContainer {
+    width: 100%;
+    background-color: black;
+    color: rgb(240,240,240);
+    
+    h3 {
+        margin: 10px;
+        font-size: 14px;
+        font-family: verdana;
+        display: inline-block;
+    }
+}
+
+.buttonContainer {
+    width: 100%;
+    background-color:black;
+}
+
+button {
+    color: rgb(240,240,240);
+    background-color: black;
+    :hover {
+        color: rgb(240,240,240);
+    }
+    :active {
+        color: rgb(240,240,240);
+    }
+}
+
+.videoPlayer {
+    width: 100%;
+    margin-bottom: -6px;
+}

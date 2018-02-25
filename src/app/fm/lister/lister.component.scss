@@ -1,0 +1,80 @@
+.btn[disabled] {
+    cursor: default;
+}
+
+.folderColor {
+    color: rgb(255, 200 ,100);
+}
+
+.textFileColor {
+    color: #969696;
+}
+
+.audioFileColor {
+    color: rgb(83, 83, 190);
+}
+
+.videoFileColor {
+    color: rgb(61, 81, 87);
+}
+
+.mainContainer {
+    width: 100%;
+}
+
+.addressBar {
+    font-family: consolas, 'Courier New', monospace;
+}
+
+.mainContainer {
+    margin-top: 1em;
+    
+    .listContainer {
+        height: 90vh;
+        overflow-y: auto;
+        margin-top: 10px;
+        .fileList td {
+            vertical-align: middle;
+            padding: 0.5em;
+        }
+
+        td.col {
+            cursor: pointer;
+            &.colSelect {
+                cursor: default;
+                width:1em;
+                text-align:center;
+            }
+
+            &.colIcon {
+                width:1em;
+                text-align: center;
+            }
+
+            &.colName {
+                width: 90%;
+                text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            &.colType {
+                min-width:3em;
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            &.colSize {
+                min-width:5em;
+                text-align: right;
+                white-space: nowrap;
+            }
+
+            &.colModified {
+                min-width:5em;
+                text-align: left;
+                white-space: nowrap;
+            }
+        }
+    }
+}
