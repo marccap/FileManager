@@ -5,17 +5,21 @@ import { FileSystemService } from './services/file-system.service';
 import { HistoryService } from './services/history.service';
 import { FileTypeService } from './services/file-type.service';
 import { FuzzySizePipe } from './pipes/fuzzy-size.pipe';
-import { GetExtensionPipe } from './pipes/get-extension.pipe';
 import { DropExtensionPipe } from './pipes/drop-extension.pipe';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule
   ],
   declarations: [
     ListerComponent,
     FuzzySizePipe,
-    GetExtensionPipe,
     DropExtensionPipe
   ],
   exports: [

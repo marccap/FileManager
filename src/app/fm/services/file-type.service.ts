@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FI } from '../model/fi';
 
 @Injectable()
 export class FileTypeService {
@@ -12,12 +13,12 @@ export class FileTypeService {
     return fileName.substring(lastDot + 1).toLowerCase();
   }
 
-  public getIcon(fileName: string, isDirectory = false) {
-    if (isDirectory) {
-      return 'glyphicon-folder-close folderColor';
+  public getIcon(item: FI) {
+    if (item.isDirectory) {
+      return 'fa fa-folder folderColor';
     }
 
-    switch (this.getExtension(fileName)) {
+    switch (this.getExtension(item.name)) {
       case 'txt':
       case 'nfo':
       case 'doc':
@@ -25,14 +26,16 @@ export class FileTypeService {
       case 'rtf':
       case 'odf':
       case 'pdf':
-        return 'glyphicon-align-left textFileColor';
+      case 'ini':
+      case 'inf':
+        return 'fa fa-file-alt textFileColor';
       case 'jpg':
       case 'jpeg':
       case 'png':
       case 'gif':
       case 'svg':
       case 'bmp':
-        return 'glyphicon-picture';
+        return 'fa fa-image';
       case 'avi':
       case 'divx':
       case 'mpg':
@@ -51,7 +54,7 @@ export class FileTypeService {
       case 'm4v':
       case '3gp':
       case 'f4v':
-        return 'glyphicon-film videoFileColor';
+        return 'fa fa-film videoFileColor';
       case 'mp3':
       case 'wav':
       case 'flac':
@@ -64,7 +67,7 @@ export class FileTypeService {
       case 'aiff':
       case 'aac':
       case 'alac':
-        return 'glyphicon-music audioFileColor';
+        return 'fa fa-file-audio audioFileColor';
       case 'zip':
       case 'rar':
       case '7z':
@@ -78,80 +81,8 @@ export class FileTypeService {
       case 'cab':
       case 'dmg':
       case 'jar':
-        return 'glyphicon-compressed'
+        return 'fa fa-file-archive'
     }
-    return 'glyphicon-file textFileColor';
-  }
-
-  public getFileTypeDesc(fileName: string, isDirectory = false) {
-    if (isDirectory) {
-      return 'Directory';
-    }
-
-    switch (this.getExtension(fileName)) {
-      case 'txt':
-      case 'nfo':
-      case 'doc':
-      case 'docx':
-      case 'rtf':
-      case 'odf':
-      case 'pdf':
-        return 'Document';
-      case 'jpg':
-      case 'jpeg':
-      case 'png':
-      case 'gif':
-      case 'svg':
-      case 'bmp':
-        return 'Image';
-      case 'avi':
-      case 'divx':
-      case 'mpg':
-      case 'mpeg':
-      case 'vob':
-      case 'mkv':
-      case 'wmv':
-      case 'flv':
-      case 'ogv':
-      case 'mov':
-      case 'qt':
-      case 'rm':
-      case 'asf':
-      case 'mp4':
-      case 'm2v':
-      case 'm4v':
-      case '3gp':
-      case 'f4v':
-        return 'Video';
-      case 'mp3':
-      case 'wav':
-      case 'flac':
-      case 'ape':
-      case 'ogg':
-      case 'wma':
-      case 'mp2':
-      case 'au':
-      case 'pcm':
-      case 'aiff':
-      case 'aac':
-      case 'alac':
-        return 'Audio';
-      case 'zip':
-      case 'rar':
-      case '7z':
-      case 'gz':
-      case 'tar':
-      case 'tgz':
-      case 'bz2':
-      case 'far':
-      case 'arj':
-      case 'arj':
-      case 'cpio':
-      case 'cab':
-      case 'dmg':
-      case 'jar':
-        return 'Compressed';
-    }
-    return this.getExtension(fileName) + '-file';
+    return 'fa fa-file textFileColor';
   }
 }

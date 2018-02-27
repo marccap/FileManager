@@ -17,7 +17,7 @@ export class FuzzySizePipe implements PipeTransform {
     const pb = Math.pow(1024, 5);
 
     if (value < 1 * kb) {
-      return value + "    B";
+      return value + " B";
     }
 
     if (value < 1000 * kb) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { FileSystemService } from '../services/file-system.service';
 import { Directory } from '../model/directory';
 import { File } from '../model/file';
@@ -14,10 +14,7 @@ import { FI } from '../model/fi';
   styleUrls: ['./lister.component.scss']
 })
 export class ListerComponent implements OnInit {
-  title = 'app';
-  currentDirectory: Directory;
-  filter = '';
-  loading = true;
+  items: FI[];
 
   constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService) { }
 
@@ -26,16 +23,15 @@ export class ListerComponent implements OnInit {
   }
 
   changeDirectory(path: string, addToHistory = true) {
-    this.loading = true;
     path = this.makePath(path);
-    this.currentDirectory = new Directory();
     if (addToHistory) {
       this.historyService.add(path);
     }
-    if (this.filter === '') {
-      this.fileSystemService.getFiles(path).subscribe(files => this.currentDirectory = files);
-    }
-    this.loading = false;
+    this.fileSystemService.getFiles(path).subscribe(files => this.items = files);
+  }
+
+  get currentPath() {
+    return this.historyService.getCurrent();
   }
 
   openItem(fi: FI) {
@@ -46,37 +42,11 @@ export class ListerComponent implements OnInit {
     }
   }
 
-  getItems() {
-    if (this.filter == '') {
-      return this.currentDirectory.fIs;
-    }
-
-    let filteredFis = new Array<FI>();
-
-    for (let fi of this.currentDirectory.fIs) {
-      if (fi.name.indexOf(this.filter) != -1) {
-        filteredFis.push(fi);
-      }
-    }
-
-    return filteredFis;
-  }
-
-  addressKeyDown() {
-    if (this.currentPath.slice(-1) == '/') {
-
-    }
-  }
-
   makePath(path: string) {
     return path.slice(-1) == '/' ? path : path + '/';
   }
 
-  get currentPath() {
-    return this.historyService.getCurrent();
-  }
-
-  canGoBack() {
+  get canGoBack() {
     return this.historyService.canGoBack();
   }
 
@@ -85,7 +55,7 @@ export class ListerComponent implements OnInit {
     this.changeDirectory(path, false);
   }
 
-  canGoForward() {
+  get canGoForward() {
     return this.historyService.canGoForward();
   }
 
@@ -94,22 +64,21 @@ export class ListerComponent implements OnInit {
     this.changeDirectory(path, false);
   }
 
+  get canGoUp() {
+    return this.historyService.getCurrent().lastIndexOf('/') != this.historyService.getCurrent().indexOf('/');
+  }
+
   up() {
     const parentPath = this.parentPath(this.historyService.getCurrent());
     this.changeDirectory(parentPath);
   }
 
   parentPath(input: string) {
-    const lastSlash = input.slice(0, -1).lastIndexOf('/');
-
-    if (lastSlash === -1) {
-      return input;
-    }
-
+    const lastSlash = input.slice(0, -1).lastIndexOf('/')
     return input.slice(0, lastSlash);
   }
 
   getIcon(fi: FI) {
-    return this.fileTypeService.getIcon(fi.name, fi.isDirectory);
+    return this.fileTypeService.getIcon(fi);
   }
 }
