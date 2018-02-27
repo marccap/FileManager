@@ -1,44 +1,38 @@
-<div class="container mainContainer">
-  <div class="row">
-    <div class="col-sm-12">
-      <button class="btn btn-secondary" (click)="back()" [disabled]="!canGoBack">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <button class="btn btn-secondary" (click)="up()" [disabled]="!canGoUp">
-        <i class="fas fa-arrow-up"></i>
-      </button>
-      <button class="btn btn-secondary" (click)="forward()" [disabled]="!canGoForward">
-        <i class="fas fa-arrow-right"></i>
-      </button>
-      <input type="text" class="form-control addressBar" spellcheck="false" [value]="currentPath">
-      <button type="button" class="btn btn-secondary">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="listContainer">
-        <table class="table table-hover fileList">
-          <tr>
-            <th class="colSelect">Select</th>
-            <th class="colName">Name</th>
-            <th class="colSize">Size</th>
-            <th class="colModified">Modified</th>
-          </tr>
-          <tr *ngFor="let item of items">
-            <td class="colSelect">
-              <input type="checkbox">
-            </td>
-            <td class="colName" (click)="openItem(item)">
-              <i [ngClass]="getIcon(item)"></i>
-              {{item.name}}
-            </td>
-            <td class="col colSize" (click)="openItem(item)">
-              <ng-container *ngIf="!item.isDirectory">
-                {{item.length | fuzzySize}}
-              </ng-container>
-            </td>
-            <td class="col colModified" (click)="openItem(item)">{{item.lastModified | date:"yyyy-MM-dd HH:mm"}}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
+<button class="btn btn-secondary" (click)="back()" [disabled]="!canGoBack">
+  <i class="fas fa-arrow-left"></i>
+</button>
+<button class="btn btn-secondary" (click)="up()" [disabled]="!canGoUp">
+  <i class="fas fa-arrow-up"></i>
+</button>
+<button class="btn btn-secondary" (click)="forward()" [disabled]="!canGoForward">
+  <i class="fas fa-arrow-right"></i>
+</button>
+<input type="text" class="form-control addressBar" spellcheck="false" [value]="currentPath">
+<button type="button" class="btn btn-secondary">
+  <i class="fas fa-bars"></i>
+</button>
+<div class="listContainer">
+  <table class="table table-hover fileList">
+    <tr>
+      <th class="colSelect">Select</th>
+      <th class="colName">Name</th>
+      <th class="colSize">Size</th>
+      <th class="colModified">Modified</th>
+    </tr>
+    <tr *ngFor="let item of items">
+      <td class="colSelect">
+        <input type="checkbox">
+      </td>
+      <td class="colName" (click)="openItem(item)">
+        <i [ngClass]="getIcon(item)"></i>
+        {{item.name}}
+      </td>
+      <td class="col colSize" (click)="openItem(item)">
+        <ng-container *ngIf="!item.isDirectory">
+          {{item.length | fuzzySize}}
+        </ng-container>
+      </td>
+      <td class="col colModified" (click)="openItem(item)">{{item.lastModified | date:"yyyy-MM-dd HH:mm"}}</td>
+    </tr>
+  </table>
 </div>
