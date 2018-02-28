@@ -26,7 +26,7 @@ export class ListerComponent implements OnInit {
 
   changeDirectory(path: string, addToHistory = true) {
     path = this.makePath(path);
-    this.status = 0;
+    this.status = 100;
     this.items = new Array<FI>();
     if (addToHistory) {
       this.historyService.add(path);
