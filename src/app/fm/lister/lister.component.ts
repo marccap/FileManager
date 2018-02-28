@@ -7,6 +7,7 @@ import { HistoryService } from '../services/history.service';
 import { FileTypeService } from '../services/file-type.service';
 import * as _ from 'lodash';
 import { FI } from '../model/fi';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-lister',
@@ -15,6 +16,7 @@ import { FI } from '../model/fi';
 })
 export class ListerComponent implements OnInit {
   items: FI[];
+  status = 200;
 
   constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService) { }
 
@@ -24,10 +26,16 @@ export class ListerComponent implements OnInit {
 
   changeDirectory(path: string, addToHistory = true) {
     path = this.makePath(path);
+    this.items = new Array<FI>();
     if (addToHistory) {
       this.historyService.add(path);
     }
-    this.fileSystemService.getFiles(path).subscribe(files => this.items = files);
+    this.fileSystemService.getFiles(path).subscribe(files => {
+      this.items = files;
+      this.status = 200;
+    }, (err: HttpErrorResponse) => {
+      this.status = err.status
+    });
   }
 
   get currentPath() {

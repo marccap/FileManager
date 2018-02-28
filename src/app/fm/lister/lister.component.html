@@ -1,16 +1,18 @@
-<button class="btn btn-secondary" (click)="back()" [disabled]="!canGoBack">
-  <i class="fas fa-arrow-left"></i>
-</button>
-<button class="btn btn-secondary" (click)="up()" [disabled]="!canGoUp">
-  <i class="fas fa-arrow-up"></i>
-</button>
-<button class="btn btn-secondary" (click)="forward()" [disabled]="!canGoForward">
-  <i class="fas fa-arrow-right"></i>
-</button>
-<input type="text" class="form-control addressBar" spellcheck="false" [value]="currentPath">
-<button type="button" class="btn btn-secondary">
-  <i class="fas fa-bars"></i>
-</button>
+<div class="btn-group">
+  <button class="btn btn-secondary" (click)="back()" [disabled]="!canGoBack">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  <button class="btn btn-secondary" (click)="up()" [disabled]="!canGoUp">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <button class="btn btn-secondary" (click)="forward()" [disabled]="!canGoForward">
+    <i class="fas fa-arrow-right"></i>
+  </button>
+  <input style="border-radius: 0px; margin-bottom: -0.2px" type="text" class="form-control addressBar" spellcheck="false" [value]="currentPath">
+  <button type="button" class="btn btn-secondary">
+    <i class="fas fa-bars"></i>
+  </button>
+</div>
 <div class="listContainer">
   <table class="table table-hover fileList">
     <tr>
@@ -18,6 +20,15 @@
       <th class="colName">Name</th>
       <th class="colSize">Size</th>
       <th class="colModified">Modified</th>
+    </tr>
+    <tr *ngIf="status==200&&items.length==0">
+      <td colspan="4" class="text-center">Empty Directory</td>
+    </tr>
+    <tr class="text-center" *ngIf="status==404">
+      <td colspan="4" class="text-center">Not Found</td>
+    </tr>
+    <tr class="text-center" *ngIf="status==403">
+      <td colspan="4" class="text-center">No Access</td>
     </tr>
     <tr *ngFor="let item of items">
       <td class="colSelect">
@@ -32,7 +43,9 @@
           {{item.length | fuzzySize}}
         </ng-container>
       </td>
-      <td class="col colModified" (click)="openItem(item)">{{item.lastModified | date:"yyyy-MM-dd HH:mm"}}</td>
+      <td class="col colModified" (click)="openItem(item)">
+        {{item.lastModified | date:"yyyy-MM-dd HH:mm"}}
+      </td>
     </tr>
   </table>
 </div>
