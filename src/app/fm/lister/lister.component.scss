@@ -14,9 +14,17 @@
     color: rgb(61, 81, 87);
 }
 
-.addressBar {
-    font-family: consolas, 'Courier New', monospace;
+div.toolbar {
+    width:100%;
+    display:flex;
+    input.addressBar {
+        font-family: consolas, 'Courier New', monospace;
+        flex-grow: 1;
+        padding: 0.5em;
+    }
 }
+
+
 
 .listContainer {
     height: 90vh;
