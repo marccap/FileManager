@@ -21,7 +21,7 @@ export class ListerComponent implements OnInit {
   constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService) { }
 
   ngOnInit() {
-    this.changeDirectory('c:/');
+    this.changeDirectory('');
   }
 
   changeDirectory(path: string, addToHistory = true) {
@@ -74,7 +74,7 @@ export class ListerComponent implements OnInit {
   }
 
   get canGoUp() {
-    return this.historyService.getCurrent().lastIndexOf('/') != this.historyService.getCurrent().indexOf('/');
+    return this.historyService.getCurrent() !== '/';
   }
 
   up() {
