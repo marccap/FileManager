@@ -4,4 +4,5 @@ export class FI {
     public isDirectory: boolean;
     public physicalPath: string;
     public lastModified: Date;
+    public selected: boolean;
 }

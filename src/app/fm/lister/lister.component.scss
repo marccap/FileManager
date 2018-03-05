@@ -2,6 +2,23 @@
    color: rgb(255, 200, 100);
 }
 
+.unselectedColor  {
+    color: rgb(240,240,240);
+    &:hover {
+        color: rgb(200,200,200);
+        background-color: white;
+    }
+}
+
+.selectedColor {
+    background-color:rgb(200,200,200);
+    color: white;
+    &:hover {
+        background-color: rgb(200,200,200);
+        color: white;
+    }
+}
+
 .textFileColor {
     color: #969696;
 }
@@ -27,21 +44,11 @@ div.toolbar {
 .listContainer {
     height: 90vh;
     overflow-y: auto;
-    margin-top: 10px;
-    .fileList td {
-        vertical-align: middle;
-        padding: 0.5em;
-    }
+}
 
+table {
     .colSelect {
         cursor: default;
-        text-align:center;
-    }
-
-    .colIcon {
-        cursor: pointer;
-        width:1em;
-        text-align: center;
     }
 
     .colName {
@@ -58,7 +65,6 @@ div.toolbar {
 
     .colSize {
         cursor: pointer;
-        word-spacing: 0.2em;
         min-width:5em;
         text-align: right;
     }

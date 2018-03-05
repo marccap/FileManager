@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ListerComponent implements OnInit {
   items: FI[];
+  allSelected = false;
   status = 200;
 
   constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService) { }
@@ -48,6 +49,27 @@ export class ListerComponent implements OnInit {
       const path = this.makePath(fi.physicalPath);
       this.changeDirectory(path);
       return;
+    }
+  }
+
+  selectAll() {
+    this.allSelected = !this.allSelected;
+    if (this.allSelected) {
+      for (let item of this.items) {
+        item.selected = true;
+      }
+    }
+    else {
+      for (let item of this.items) {
+        item.selected = false;
+      }
+    }
+  }
+
+  toggleSelect() {
+    this.allSelected = false;
+    for (let item of this.items) {
+      item.selected = !item.selected;
     }
   }
 
