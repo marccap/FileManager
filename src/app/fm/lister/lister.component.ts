@@ -77,6 +77,15 @@ export class ListerComponent implements OnInit {
     return path.slice(-1) == '/' ? path : path + '/';
   }
 
+  get itemsSelected() {
+    for (let item of this.items) {
+      if (item.selected) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   get canGoBack() {
     return this.historyService.canGoBack();
   }
