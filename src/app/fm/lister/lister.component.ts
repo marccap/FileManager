@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule } from '@angular/forms';
 import { FileSystemService } from '../services/file-system.service';
-import { Directory } from '../model/directory';
-import { File } from '../model/file';
 import { HistoryService } from '../services/history.service';
 import { FileTypeService } from '../services/file-type.service';
 import * as _ from 'lodash';
 import { FI } from '../model/fi';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-lister',
@@ -18,8 +17,9 @@ export class ListerComponent implements OnInit {
   items: FI[];
   allSelected = false;
   status = 200;
+  closeResult: string;
 
-  constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService) { }
+  constructor(private fileSystemService: FileSystemService, private historyService: HistoryService, private fileTypeService: FileTypeService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.changeDirectory('');
@@ -111,5 +111,23 @@ export class ListerComponent implements OnInit {
 
   getIcon(fi: FI) {
     return this.fileTypeService.getIcon(fi);
+  }
+
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }
