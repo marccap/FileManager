@@ -32,46 +32,80 @@
 }
 
 div.toolbar {
-    width:100%;
     display:flex;
+    button.btn {
+        margin-left:0px;
+        border-radius: 0;
+    }
+    & button.btn:first-child {
+        border-top-left-radius: 4px;
+    }
+    & button.btn:last-child {
+        border-top-right-radius: 4px;
+    }
     input.addressBar {
         font-family: consolas, 'Courier New', monospace;
         flex-grow: 1;
-        padding: 0.5em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
 }
 
 .listContainer {
-    height: 90vh;
-    overflow-y: auto;
+    height: 70vh;
+    overflow-y: scroll;
 }
 
 table {
+    &.table {
+        margin-top:0;
+    }
+
+    th {
+        text-align: left;
+        border-bottom: 1px solid rgb(200,200,200);
+    }
+
+    th:not(:last-child) {
+        border-right: 1px solid rgb(200,200,200);
+    }
+
+    th::last-child {
+        border-right: none;
+    }
+
+    td{
+        border-top: none;
+        border-bottom: 1px solid rgb(200,200,200);
+        cursor: pointer;
+    }
+
     .colSelect {
+        min-width:2.73em;
         cursor: default;
     }
 
     .colName {
-        cursor: pointer;
         width: 90%;
-        text-align: left;
     }
 
     .colType {
-        cursor: pointer;
         min-width:3em;
-        text-align: left;
     }
 
     .colSize {
-        cursor: pointer;
         min-width:5em;
+    }
+
+    td.colSize {
         text-align: right;
     }
 
-    .colModified {
-        cursor: pointer;
+    th.colModified {
+        min-width:11em;
+    }
+
+    td.colModified {
         min-width:10em;
-        text-align: left;
     }
 }
